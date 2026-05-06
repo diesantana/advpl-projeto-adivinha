@@ -1,6 +1,6 @@
 #include 'totvs.ch'
 
-/*/{Protheus.doc} ADVINHA
+/*/{Protheus.doc} ADIVINHA
 Gera a lógica do Jogo de Adivinhar. 
 @type user function
 @author Diego Santana
@@ -10,7 +10,6 @@ Gera a lógica do Jogo de Adivinhar.
 User Function ADIVINHA
 	Local aNiveis := {"Fácil", "Normal", "Dificil"} // Define os níveis de dificuldade
 	Local nNivel := 0 // Define o Nível de dificuldade
-	Local nMax := 100 // Define o valor máximo de números randomicos
 
 	Local nRandom := 0 // Número a ser adivinhado
 	Local nUser := 0 // Número digitado pelo usuário
@@ -21,20 +20,8 @@ User Function ADIVINHA
 	// Aviso( <cTitulo>, <cMensagem>, <aBotões>, <nTempo>, <cSubtitulo> ).
 	nNivel := Aviso("Dificuldade", "Escolha o nível de dificuldade:", aNiveis, 3, )
 
-    // Define o valor máximo de números randomicos de acordo com a escolha do usuário
-    Do Case
-        Case nNivel == 1
-            nMax := 50 // Nível Fácil
-        Case nNivel == 2
-            nMax := 100 // Nível Normal
-        Case nNivel == 3
-            nMax := 200 // Nível Dificil
-        Otherwise
-            nMax := 100 // Default = Normal
-    EndCase
-
-    // Gera o número aleatório de acordo com a dificuldade
-    nRandom := Randomize(1, nMax)
+	// Gera o número aleatório de acordo com a dificuldade definida pelo usuário
+	nRandom := gerarNum(nNivel)
 
 	// Repete o While enquanto o nRandom for diferente de nUser
 	while nRandom != nUser
@@ -56,3 +43,31 @@ User Function ADIVINHA
 		endif
 	end
 Return
+
+/*/{Protheus.doc} gerarNum
+    Gera um número aleatório de acordo com dificuldade definida pelo usuário.
+    @type  Static Function
+    @param nNivel, Numérico, Nível de dificuldade (1 = Fácil, 2 = Normal, 3 = Difícil)
+    @return nNumero, Numérico, Número Aleatório
+    @author Diego Santana
+    @since 06/05/2026
+/*/
+Static Function gerarNum(nNivel)
+
+	Local nMax := 0 // Define o valor máximo de números randomicos
+	Local nNumero := 0 // Define o valor aletório a ser retornado
+
+	// Define o valor máximo de números randomicos de acordo com a escolha do usuário
+	Do Case
+	Case nNivel == 1
+		nMax := 50 // Nível Fácil
+	Case nNivel == 2
+		nMax := 100 // Nível Normal
+	Case nNivel == 3
+		nMax := 200 // Nível Dificil
+	Otherwise
+		nMax := 100 // Default = Normal
+	EndCase
+	nNumero := Randomize(1, nMax)
+
+Return nNumero
