@@ -10,6 +10,8 @@ Gera a lógica do Jogo de Adivinhar.
 User Function ADIVINHA
     Local nRandom := Randomize(1, 100) // Número a ser adivinhado
     Local nUser := 0 // Número digitado pelo usuário
+    Local nErrors := 0 // Número de tentativas erradas
+    Local cMsg // Monta a mensagem de retorno
 
     // Repete o While enquanto o nRandom for diferente de nUser
     while nRandom != nUser
@@ -18,11 +20,16 @@ User Function ADIVINHA
 
         // Verifica se acertou o número
         if nUser == nRandom
-            MsgInfo("Você acertou! O Número é:<b>" + cValToChar(nRandom) + "</b>", "Fim de Jogo!")
+            cMsg := "Você acertou!<br>O Número é:<b>" + cValToChar(nRandom) + "</b><br>Erros: " + cValToChar(nErrors)
+            MsgInfo(cMsg, "Fim de Jogo!")
         elseif nUser > nRandom
-            MsgInfo("Você Errou! O Número é MENOR que:<b>" + cValToChar(nUser) + "</b>", "Tente Novamente")
+            cMsg := "Você Errou!<br>O Número é MENOR que <b>" + cValToChar(nUser) + "</b>"
+            MsgInfo(cMsg, "Tente Novamente")
+            nErrors++ // Incrementa a variável de erros
         else
-            MsgInfo("Você Errou! O Número é MAIOR que:<b>" + cValToChar(nUser) + "</b>", "Tente Novamente")
+            cMsg := "Você Errou!<br>O Número é MAIOR que <b>" + cValToChar(nUser) + "</b>"
+            MsgInfo(cMsg, "Tente Novamente")
+            nErrors++ // Incrementa a variável de erros
         endif
     end
 Return
